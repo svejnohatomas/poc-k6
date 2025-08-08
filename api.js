@@ -1,17 +1,10 @@
 import http from 'k6/http';
 import { describe, expect } from 'https://jslib.k6.io/k6chaijs/4.5.0.1/index.js';
 
-// This script is a k6 load test configuration file.
-// It defines the options for the load test, including thresholds and stages,
-// and exports a default function that performs an HTTP POST request.
-export const name = 'API Load Test'; // Name of the test for identification
-export const version = '1.0.0'; // Version of the test script
-export const description = 'Load test for API endpoint'; // Description of the test
-
 // Options for the load test, including thresholds and stages
 // Thresholds define performance criteria that the test should meet.
 export const options = {
-   vus: 10, // Number of virtual users to start with
+   vus: 0, // Number of virtual users to start with
    thresholds: {
       http_req_duration: ['p(95)<500'], // 95% of requests should be under 500ms
       http_req_failed: ['rate<0.01'], // Less than 1% of requests should fail
@@ -19,9 +12,9 @@ export const options = {
    // Stages define the ramp-up and ramp-down of virtual users to simulate different load levels over time.
    // This helps in testing the system's performance under varying loads.
    stages: [
-      { target: 10, duration: "30s" }, // Ramp up to 10 users over 30 seconds
-      { target: 20, duration: "30s" }, // Ramp up to 20 users over the next 30 seconds
-      { target: 20, duration: "60s" }, // Ramp up to 20 users over the next 60 seconds
+      { target: 10, duration: "30s" }, // Ramp up to 10 users over the next 30 seconds
+      { target: 100, duration: "60s" }, // Ramp up to 100 users over the next 60 seconds
+      { target: 100, duration: "60s" }, // Maintain 100 users for 60 seconds
       { target: 0, duration: "30s" }, // Ramp down to 0 users over the next 30 seconds
    ],
 };
